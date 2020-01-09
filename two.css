@@ -1,0 +1,28 @@
+   
+   .mytitle {
+     color: white;
+     background-image: url(http://www.forest.go.kr/newkfsweb/cmm/fms/FileDown.do?atchFileId=FILE_000000010008639&fileSn=0);
+     border-radius: 10px;
+     width: 300px;
+     height: 200px;
+     background-size: cover;
+     background-position: center;
+     text-align: center;
+
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+
+ font-family: 'Nanum Pen Script', cursive;}
+
+     .mytitle > h1 {
+        margin: 0 0 5px 0;
+    }   
+    .mytitle > h5 {
+        margin: 5px 0 0 0;}
+
+        .wrap {
+            width: 300px;
+        margin: 50px auto 0 auto;
+        }
