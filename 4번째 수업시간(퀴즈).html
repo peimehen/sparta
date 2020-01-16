@@ -15,18 +15,41 @@
       h6.warning {
       	/* 여기도 코드가 필요하겠죠? 빨간색 글씨 */
       }
+
+      .warning {
+        color: red;
+      }
     </style>
 
     <script>
+
       function q1(){
         // 1. input-q1의 입력값을 가져온다.
+        let txt = $('#input-q1').val();
         // 2. 만약 입력값이 빈칸이면 if(입력값=='')
+        if (txt == '') {
+           alert('입력하세요!');
+         } else {
+          alert(txt);
+         }
+        }
         // 3. alert('입력하세요!') 띄우기
         // 4. alert(입력값) 띄우기
+    
+      function q5(){
+        let txt = $('#input-q5').val();
+        if (txt.indexOf('@') < 0) {
+          $('#warning-q5').show();
+          $('#domain-q5').hide();
+        } else {
+          let domain = txt.split('@')[1].split('.')[0];
+          $('#domain-q5').text(domain);
+          $('#warning-q5').hide();
+          $('#domain-q5').show();
+        }
       }
 
-      function q5(){
-				// 0. 일단, 소문제 미리보기의 2-4번을 꼭 해보고 아래를 읽어주세요!
+				// 0. , 소문제 미리보기의 2-4번을 꼭 해보고 아래를 읽어주세요!
       	// 1. input-q5 값을 가져온다.
       	// 2. 만약 가져온 값에 @가 있으면 (indexOf를 이용하기 - 찾아보자!)
       	// 3. info.spartacoding@gmail.com -> gmail 만 추출해서
@@ -35,7 +58,7 @@
       	// 6. 가져온 값에 @가 없으면
       	// 7. warning-q5의 warning 클래스를 이용해서, 글씨를 빨간색으로 바꾼다. (head 안의 <style>~</style>부분을 보세요!)
       	// 8. warning-q5는 보이게하고, domain-q5는 안보이게 한다.
-      }
+      
 
       function q7() {
       	// 1. input-q7 값을 가져온다.
