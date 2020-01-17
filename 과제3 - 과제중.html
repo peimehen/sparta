@@ -3,7 +3,7 @@
 <head>
 
   <!-- Webpage Title -->
-  <title>Hello, world!</title>
+  <title>나홀로 쇼핑몰</title>
 
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -42,46 +42,57 @@
       width: 550px;
       margin: 20px auto 0 auto;
     }
-    .here {
+    .order {
 
       text-align: center;
       margin: 0 auto 20px auto;    }
 
+    .orders {
+
+      margin-top: 100px;
+    }
+
     </style>
 
     <script type="text/javascript">
-      
-      function order() {
-        let names = $('#name').val();
-        let count = $('#count_num').val();
-        let address = $('#add').val();
-        let callnum = $('#order_callnum').val();
 
-        if (names == ''){
+      function isCellPhone(p) {
+        var regExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})[-][0-9]{3,4}[-][0-9]{4}$/;
+        return regExp.test(p);
+      }
+
+      function order() {
+        let name = $('#order_name').val();
+        let count = $('#order_count').val();
+        let address = $('#order_address').val();
+        let phone = $('#order_phone').val();
+
+        if (name == ''){
           alert('이름을 입력해주세요')
-          $('#name').focus()
+          $('#order_name').focus()
           return
         } else if (count == ''){
           alert('수량을 입력해주세요')
-          $('#count_num').focus()
+          $('#order_count').focus()
           return
-        } else if (address == '') {
+        } else if (address == ''){
           alert('주소를 입력해주세요')
-          $('#add').focus()
+          $('#order_address').focus()
           return
-        } else if (callnum == '') {
-          alret('휴대폰번호를 입력해주세요')
-          $('#order_callnum').focus()
+        } else if (phone == ''){
+          alert('휴대폰번호를 입력해주세요')
+          $('#order_phone').focus()
           return
-        } else if (!iscellphone(phone)) {
+        } else if (!isCellPhone(phone)) {
           alert('휴대폰번호 입력 형식이 틀립니다. \n 010-0000-0000으로 입력해주세요')
-        } return
-      }
-      
-$.ajax({
+          return
+        } 
+        
+
+        $.ajax({
           type: "POST",
           url: "/order",
-          data: { name_give:names, count_give:count, address_give:address, phone_give:callnum },
+          data: { name_give:name, count_give:count, address_give:address, phone_give:phone},
           success: function(response){
             if(response['result'] == 'success'){
               alert('주문 완료!');
@@ -89,6 +100,42 @@ $.ajax({
             }
           }
         })
+      }
+
+      $(document).ready(function(){
+        $('#orders-box').html('');
+        listing();
+      });
+
+      function listing() {
+        $.ajax({
+          type: "GET",
+          url: "/order",
+          data: {},
+          success: function(response){
+           if (response['result'] == 'success') {
+             let orders = response['orders'];
+             console.log(orders);
+             for (let i = 0; i < orders.length; i++) {
+               make_card(orders[i]['name'],orders[i]['count'],orders[i]['address'],orders[i]['phone'])
+             }
+           } else {
+             alert('기사를 받아오지 못했습니다');
+           }
+         }
+       })
+      }
+
+      function make_card(name,count,address,phone) {
+        let temp_html = '<tr>\
+        <td>'+name+'</td>\
+        <td>'+count+'</td>\
+        <td>'+address+'</td>\
+        <td>'+phone+'</td>\
+        </tr>';
+        $('#orders-box').append(temp_html);
+      }
+
       
 
     </script>
@@ -102,18 +149,19 @@ $.ajax({
       <br>
       <p>벨기에 프리미엄 초콜릿 고디바의 시그니처 트뤼프 컬렉션으로
       더욱 현대적이고 고급스럽게 업그레이드하여 새롭게 출시한 고디바 큐브 트뤼프 컬렉션. 고디바 쉐프 쇼콜라티에가 엄선한 최상의 재료를 사용하여 새롭게 탄생한 9가지 초콜릿은 부드러운 이중 텍스처 필링과 다양한 토핑으로 매력적인 식감과 뛰어난 풍미를 자랑합니다.</p>
+      <div class="info">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">주문자 이름</span>
         </div>
-        <input id="name" type="text" class="form-control" placeholder></div>
+        <input id="order_name" type="text" class="form-control" placeholder></div>
 
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">수량</label>
           </div>
-          <select id="count_num" class="custom-select">
-            <option selected>---수량을 선택하세요---</option>
+          <select id="order_count" class="custom-select">
+            <option selected value>---수량을 선택하세요---</option>
             <option value="1">1개</option>
             <option value="2">2개</option>
             <option value="3">3개</option>
@@ -124,17 +172,18 @@ $.ajax({
           <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">주소</span>
           </div>
-          <input id="add" type="text" class="form-control" placeholder></div>
+          <input id="order_address" type="text" class="form-control" placeholder></div>
 
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">전화번호</span>
             </div>
-            <input id="order_callnum" type="text" class="form-control" placeholder>
+            <input id="order_phone" type="text" class="form-control" placeholder>
           </div>
-          <div class="here">
+          <div class="order">
             <button type="button" class="btn btn-secondary" onclick="order()">주문하기</button>
           </div>
+        </div>
 
           <div class="orders">
             <table class="table">
@@ -147,24 +196,8 @@ $.ajax({
                 </tr>
               </thead>
               <tbody id="orders-box">
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+                <tr></tr>
+
               </tbody>
             </table>
 
