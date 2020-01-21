@@ -43,7 +43,10 @@
     .orders {
       margin-top: 100px;
     }
-
+    .all {
+      text-align: center;
+    }
+    
     </style>
 
     <script type="text/javascript">
@@ -140,16 +143,17 @@
           </div>
 
           <div class="orders">
-            <table class="table">
+            <table class="table table-bordered">
               <thead>
-                <tr>
+                <tr class="all table-active">
+                  <th scope="col">연번</th>
                   <th scope="col">이름</th>
                   <th scope="col">수량</th>
                   <th scope="col">주소</th>
                   <th scope="col">전화번호</th>
                 </tr>
               </thead>
-              <tbody id="orders-box">
+              <tbody class="all" id="orders-box">
               </tbody>
             </table>
           </div>
