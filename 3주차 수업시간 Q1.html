@@ -15,7 +15,23 @@
 
     <script>
       function q1() {
-        // 여기에 코드를 입력하세요
+        let ul = $('#names-q1');
+        ul.empty();
+        $.ajax({
+          type:"GET",
+          url:'http://openapi.seoul.go.kr:8088/6d4d776b466c656533356a4b4b5872/json/RealtimeCityAir/1/99',
+          data:{},
+          success: function(response) {
+            let row = response['RealtimeCityAir']['row']; //row는 리스트
+            for(let i = 0; i < row.length; i++) {
+              var name = row[i]['MSRSTE_NM'];
+              var index = row[i]['IDEX_MVL'];
+               var html = '<li>' + name +':' + index +'</li>';
+               ul.append(html);
+
+            }
+          }
+        })
       }
     </script>
 
