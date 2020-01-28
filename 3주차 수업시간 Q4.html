@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <title>JQuery 연습하고 가기!</title>
+    <!-- JQuery를 import 합니다 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <style type="text/css">
+      div.question-box {
+        margin: 10px 0 20px 0;
+      }      
+    </style>
+
+    <script>
+      function q1() {
+        let number = $('#magicnum').val().trim();
+
+        if (number == ''){
+          alert('숫자를 입력하세요')
+          return;
+        } 
+
+        let target_url = 'http://numbersapi.com/' + number;
+
+           $.ajax({
+          type:"GET",
+        url:target_url,
+        data:{},
+        success: function(response) {
+          $('#meaning').text(response);
+          }
+        })
+        }
+        // 여기에 코드를 입력하세요
+    </script>
+
+  </head>
+  <body>
+    <h1>JQuery+Ajax의 조합을 연습하자!</h1>
+
+    <hr/>
+
+    <div class="question-box">
+      <h2>4. 랜덤 숫자 의미부여 API를 이용하기</h2>
+      <p>모든 숫자는 어떤 의미가 있습니다.</p>
+      <p>아무것도 입력하지 않으면, alert를 띄워주세요.</p>
+      <input type="number" id="magicnum">
+      <button onclick="q1()">이 숫자의 의미는?</button>
+      <h5 id="meaning"></h5>
+    </div>
+  </body>
+</html>
