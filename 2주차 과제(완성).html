@@ -58,10 +58,10 @@
       }
 
       function order() {
-        let name = $('#order-name').val();
-        let count = $('#order-count').val();
-        let address = $('#order-address').val();
-        let phone = $('#order-phone').val();
+        let name = $('#order-name').val().trim();
+        let count = $('#order-count').val().trim();
+        let address = $('#order-address').val().trim();
+        let phone = $('#order-phone').val().trim();
 
         if (name == ''){
           alert('이름을 입력해주세요')
