@@ -19,34 +19,48 @@
       padding: 10px;
       border: 1px solid;
     }
+
+    .urgent {
+      color: red;
+    }
   </style>
 
   <script>
     function q1() {
-      let ul = $('#names-q1');
-      ul.empty();
+      let cycle_tbody = $('#names-q1');
+      cycle_tbody.empty();
       $.ajax({
         type:"GET",
-        url:'http://openapi.seoul.go.kr:8088/6d4d776b466c656533356a4b4b5872/json/bikeList/1/99'
+        url:'http://openapi.seoul.go.kr:8088/6d4d776b466c656533356a4b4b5872/json/bikeList/1/99',
         data:{},
         success: function(response) {
             let row = response['rentBikeStatus']['row']; //row는 리스트
             for(let i = 0; i < row.length; i++) {
               var name = row[i]['stationName'];
-              var count = row[i]['rackTotCnt']
+              var count = row[i]['rackTotCnt'];
               var parking_count = row[i]['parkingBikeTotCnt'];
-              var html = '<tr>\
+
+              if ( row[i]['parkingBikeTotCnt'] >= 5) {
+                var html =  '<tr>\
               <td>'+name+'</td>\
               <td>'+count+'</td>\
               <td>'+parking_count+'</td>\
               </tr>';
-              $('#names-q1').append(html);
-              return
+              } else {
+                    var html =  '<tr>\
+              <td class="urgent">'+name+'</td>\
+              <td>'+count+'</td>\
+              <td>'+parking_count+'</td>\
+              </tr>';
+              }
+              cycle_tbody.append(html);
+
             }
-          })
-    }
-        // 여기에 코드를 입력하세요
-      }
+          }
+        })
+}
+  
+        // 여기에 코드를 입력하세
     </script>
 
   </head>
